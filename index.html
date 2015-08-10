@@ -160,6 +160,211 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/10/objective-c-grammar05/" itemprop="url">
+                Objective-C 语法(五) Block和Protocol
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-10T18:39:24+08:00" content="2015-08-10">
+            2015-08-10
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/OC/" itemprop="url" rel="index"><span itemprop="name">OC</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Block">Block</h2><p>block用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。</p>
+<p>block的标志: <code>^</code></p>
+<p>block和函数的相同点:</p>
+<ol>
+<li>可以保存代码。</li>
+<li>有返回值。</li>
+<li>有形参。</li>
+<li>调用方式一样。</li>
+</ol>
+<p>定义block变量:</p>
+<ul>
+<li>无参数、无返回值 <code>void (^blockName)();</code></li>
+<li>有参数、有返回值 <code>int (^blockName)(int, int)</code></li>
+</ul>
+<p>利用block封装代码:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^minusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">minusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure></p>
+<p>block可以访问外部的变量。默认情况下，block内部不能修改外部的局部变量。给外部的局部变量加上<code>__block</code>关键字，就可以在block内部进行修改了。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    <span class="keyword">sum</span>++;</span><br><span class="line">    <span class="keyword">return</span> (num * <span class="keyword">sum</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/10/objective-c-grammar05/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/10/objective-c-grammar04/" itemprop="url">
+                Objective-C 语法(四) OC内存
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-10T18:15:36+08:00" content="2015-08-10">
+            2015-08-10
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/OC/" itemprop="url" rel="index"><span itemprop="name">OC</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="OC内存">OC内存</h2><p>每个OC对象都有自己的引用计数器，是整数，表示该对象被引用的次数。<br>当引用计数器为<code>0</code>的时候，对象就会被系统回收。</p>
+<p>每个OC对象内部专门有<code>4个字节</code>的存储空间来存引用计数器。</p>
+<p>给对象发送一条<code>retain</code>消息，引用计数器<code>+1</code>，<code>retain</code>方法返回对象本身。<br>给对象发送一条<code>release</code>消息， 引用计数器<code>-1</code>。<br>给对象发送<code>retainCount</code>消息获得引用计数器值。</p>
+<h3 id="僵尸对象">僵尸对象</h3><p>所占用内存已经被回收的对象，僵尸对象不能再使用。</p>
+<h3 id="野指针">野指针</h3><p>指向僵尸对象(不可用内存)的指针。</p>
+<p><code>EXC_BAD_ACCESS</code>: 访问了一块坏的内存(已经被回收，不可用的内存)。</p>
+<p>OC当中没有空指针异常。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[nil release]</span>; <span class="comment">// 不会报错</span></span><br></pre></td></tr></table></figure>
+<p><span style="color:#e73751">Tips:</span> 基本数据类型不需要内存管理，OC对象才需要内存管理。</p>
+<h3 id="dealloc方法">dealloc方法</h3><p>当一个对象要被回收，就会自定调用。<br>一定记得在重写的时候，在最后调用<code>[super dealloc];</code></p>
+<h3 id="内存管理">内存管理</h3><p>只要调用了<code>alloc</code>、<code>new</code>、<code>retain</code>或<code>copy(mutablecopy)</code>，必须有<code>release或autorelease</code>。</p>
+<h3 id="@property">@property</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@property</span> (retain) Book *book; <span class="comment">// 就可以生成严谨的有内存管理的setter和getter</span></span><br></pre></td></tr></table></figure>
+<p>@property括号中的参数</p>
+<ul>
+<li>内存管理相关的3个参数:<ul>
+<li><code>retain</code>: 使用于OC对象类型，有<code>retain</code>记得要<code>release</code>，这个会<code>release</code>旧值， 在<code>setter</code>中<code>retain</code>新值。</li>
+<li><code>assign</code>: 直接赋值，适用于非OC对象类型。<code>(默认)</code> 出于代码规范，就算是默认值也需要写出来，显式总比隐式清晰明了。</li>
+<li><code>copy</code>: <code>release</code>旧值，<code>retain</code>新值。</li>
+</ul>
+</li>
+<li>是否要生成setter:<ul>
+<li><code>readonly</code>: 不生成setter，只会生成getter</li>
+<li><code>readwrite</code>: 同时生成setter和getter。<code>(默认)</code></li>
+</ul>
+</li>
+<li>多线程管理:<ul>
+<li><code>nonatomic</code>: 生成setter和getter时不加锁，性能高，一般就用这个。</li>
+<li><code>atomic</code>: 生成setter和getter时加锁，性能低。<code>(默认)</code></li>
+</ul>
+</li>
+<li>setter和getter方法名称的修改<ul>
+<li><code>setter=setFunc:</code> set方法一定记得加<code>:</code>冒号</li>
+<li><code>getter=func</code></li>
+</ul>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/10/objective-c-grammar04/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/08/objective-c-grammar03/" itemprop="url">
                 Objective-C 语法(三) Category和SEL
               </a>
@@ -449,7 +654,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

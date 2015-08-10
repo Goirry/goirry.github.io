@@ -37,28 +37,58 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
+<meta name="description" content="Blockblock用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。
+block的标志: ^
+block和函数的相同点:
+
+可以保存代码。
+有返回值。
+有形参。
+调用方式一样。
+
+定义block变量:
+
+无参数、无返回值 void (^blockName)();
+有参数、有返回值 int (^blockName)(int, int)
+
+利用block封装代码:123456">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Objective-C 语法(三) Category和SEL">
-<meta property="og:url" content="http://goirry.github.io/2015/08/08/objective-c-grammar03/index.html">
+<meta property="og:title" content="Objective-C 语法(五) Block和Protocol">
+<meta property="og:url" content="http://goirry.github.io/2015/08/10/objective-c-grammar05/index.html">
 <meta property="og:site_name" content="Goirry's Blog">
-<meta property="og:description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
-<meta property="og:updated_time" content="2015-08-08T08:59:12.000Z">
+<meta property="og:description" content="Blockblock用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。
+block的标志: ^
+block和函数的相同点:
+
+可以保存代码。
+有返回值。
+有形参。
+调用方式一样。
+
+定义block变量:
+
+无参数、无返回值 void (^blockName)();
+有参数、有返回值 int (^blockName)(int, int)
+
+利用block封装代码:123456">
+<meta property="og:updated_time" content="2015-08-10T10:49:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Objective-C 语法(三) Category和SEL">
-<meta name="twitter:description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
+<meta name="twitter:title" content="Objective-C 语法(五) Block和Protocol">
+<meta name="twitter:description" content="Blockblock用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。
+block的标志: ^
+block和函数的相同点:
+
+可以保存代码。
+有返回值。
+有形参。
+调用方式一样。
+
+定义block变量:
+
+无参数、无返回值 void (^blockName)();
+有参数、有返回值 int (^blockName)(int, int)
+
+利用block封装代码:123456">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -68,7 +98,7 @@
   };
 </script>
 
-    <title> Objective-C 语法(三) Category和SEL // Goirry's Blog </title>
+    <title> Objective-C 语法(五) Block和Protocol // Goirry's Blog </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -171,7 +201,7 @@
           
           
             
-              Objective-C 语法(三) Category和SEL
+              Objective-C 语法(五) Block和Protocol
             
           
         </h1>
@@ -180,8 +210,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-08T16:43:13+08:00" content="2015-08-08">
-            2015-08-08
+          <time itemprop="dateCreated" datetime="2015-08-10T18:39:24+08:00" content="2015-08-10">
+            2015-08-10
           </time>
         </span>
 
@@ -210,34 +240,38 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="分类_Category">分类 Category</h2><p>分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。</p>
-<h3 id="声明:">声明:</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> 类名 (分类名)</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
-<h3 id="实现:">实现:</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> 类名 (分类名)</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
-<h3 id="分类的作用：">分类的作用：</h3><p>在不改变原来类内容的基础上，可以为类增加一些代码。</p>
-<h3 id="分类注意点:">分类注意点:</h3><p>1.分类只能增加方法，不能增加成员变量。<br>2.分类方法实现中可以访问原类中的声明的成员变量。<br>3.分类可以重写原类中的方法。<br>4.方法调用的优先级: 分类 -&gt; 原类 -&gt; 父类</p>
-<p>当程序启动的时候，就会加载一次项目中所有的类，类加载完毕后就会调用<code>+ load</code>方法。当第一次使用这个类的时候，就会调用一次<code>+ initialize</code>方法。<br>先加载父类，再加载子类。先初始化父类，再初始化子类。<br>分类必定在原类之后加载，最后参与编译的分类具有最高优先级。</p>
-<a id="more"></a>
-<h2 id="SEL">SEL</h2><p>SEL其实是对方法的一种包装，将方法包装成一个<code>SEL类型</code>的数据，所以SEL是一种数据类型。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person *p = [[Person alloc] init];</span><br><span class="line">[p test];</span><br></pre></td></tr></table></figure>
-<p>调用方法时，其实有3个步骤:</p>
+        <span itemprop="articleBody"><h2 id="Block">Block</h2><p>block用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。</p>
+<p>block的标志: <code>^</code></p>
+<p>block和函数的相同点:</p>
 <ol>
-<li>把test先包装成SEL类型的数据。</li>
-<li>根据SEL数据找到对应的内存中的方法地址。</li>
-<li>根据方法地址调用对应的方法。</li>
+<li>可以保存代码。</li>
+<li>有返回值。</li>
+<li>有形参。</li>
+<li>调用方式一样。</li>
 </ol>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[p performSelector:<span class="keyword">@selector</span>(test)]; <span class="comment">// 同样也是调用test方法</span></span><br></pre></td></tr></table></figure>
-<p><code>performSelector:</code>是一个对象方法，返回<code>id</code>类型数据。要求传入<code>SEL数据</code>的参数<br><code>@selector</code>就返回一个<code>SEL数据</code>，传入方法名作为参数就可以把方法名包装成<code>SEL数据</code>。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下两个方法是同样效果</span></span><br><span class="line">[p <span class="string">test2:</span>@<span class="string">"123"</span>];</span><br><span class="line">[p <span class="string">performSelector:</span><span class="annotation">@selector</span>(<span class="string">test2:</span>) <span class="string">withObject:</span>@<span class="string">"123"</span>];</span><br></pre></td></tr></table></figure>
-<p><span style="color:#ff5c16">注意:</span><code>test2:</code>方法名后面的<code>:</code>冒号不能少，冒号也是方法名的一部分，表示后面需要传参。</p>
-<p>我们常常说的发消息就是发送SEL类型的消息。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *funcName = <span class="string">@"test3"</span>;</span><br><span class="line">SEL s = <span class="built_in">NSSelectorFromString</span>(funcName); <span class="comment">// 把字符串包装成SEL数据</span></span><br><span class="line">[p performSelector:s];</span><br></pre></td></tr></table></figure>
-<p>每个方法内部都有个<code>_cmd</code>的SEL数据，代表着当前方法。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str = <span class="built_in">NSStringFromSelector</span>(_cmd); <span class="comment">// 把SEL转成字符串</span></span><br></pre></td></tr></table></figure>
-<p><code>_cmd</code>就等于<code>@selector(当前方法名)</code>。</p>
-<h2 id="NSLog">NSLog</h2><p>使用NSLog打印OC对象，使用<code>%@</code>占位符。<br>使用<code>NSLog和%@</code>打印对象时，会调用对象的<code>- description</code>方法。<br>然后拿到<code>- description</code>返回值(NSString *)显示。<br><code>- description</code>默认返回值是地址(句柄)，<code>- description</code>就等同于<code>Java</code>中的<code>toString</code>方法。<br>在<code>- description</code>中写<code>NSLog(@&quot;%@&quot;, self);</code>会进入死循环。</p>
-<p>NSLog输出C语言字符串(%s)时，不能有中文，否则不打印输出结果，printf则不会有这样的问题。</p>
-<p>NSLog输出增强</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, __LINE__); <span class="comment">// 打印行号</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __FILE__); <span class="comment">// 打印文件路径</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__); <span class="comment">// 打印当前方法名</span></span><br></pre></td></tr></table></figure></span>
+<p>定义block变量:</p>
+<ul>
+<li>无参数、无返回值 <code>void (^blockName)();</code></li>
+<li>有参数、有返回值 <code>int (^blockName)(int, int)</code></li>
+</ul>
+<p>利用block封装代码:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^minusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">minusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure></p>
+<p>block可以访问外部的变量。默认情况下，block内部不能修改外部的局部变量。给外部的局部变量加上<code>__block</code>关键字，就可以在block内部进行修改了。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    <span class="keyword">sum</span>++;</span><br><span class="line">    <span class="keyword">return</span> (num * <span class="keyword">sum</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>可以利用typedef定义block变量:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(^MySum)</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">MySum sumBlock = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><span style="color:#e73751">Tips:</span> 苹果官方建议尽量多使用block。在多线程、异步任务、集合遍历、集合排序、动画转场用的很多。</p>
+<h2 id="Protocol">Protocol</h2><p>可以用来声明一大堆方法，但是不能声明成员变量。<br>只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明。<br>只要父类遵守了某个协议，就相当于子类也遵守了该协议。</p>
+<p>某个类遵守协议:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@protocol</span> ProtocolName; <span class="comment">// 相比#import "ProtocolName.h"性能更好, 理由与@class相似</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> <span class="attribute">ClassName </span>: SuperClass &lt;ProtocolName&gt; <span class="comment">// 支持多协议 &lt;协议1, 协议2, 协议3&gt;</span></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>协议中的修饰关键字:<br><code>@required</code> 要求实现的方法，不实现会发出警告。<code>(默认)</code><br><code>@optional</code> 不要求实现的方法，可选性实现。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下的func1和func2是要求实现的，func3是可选实现的。</span></span><br><span class="line"><span class="annotation">@required</span></span><br><span class="line">- (<span class="keyword">void</span>) func1;</span><br><span class="line">- (<span class="keyword">void</span>) func2;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@optional</span></span><br><span class="line">- (<span class="keyword">void</span>) func3;</span><br></pre></td></tr></table></figure>
+<p>协议使用的场合:<br>最多的是用在代理模式、观察者模式上。</p>
+<p>基协议:<br><code>NSObject</code>是一个基类(最根本最基本的类)，还有一个协议，名字也叫<code>NSObject</code>，是基协议。建议每个新的协议都要遵守NSObject协议。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本协议的定义</span></span><br><span class="line"><span class="variable">@protocol</span> ProtocolName &lt;NSObject&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法声明</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<p>类的属性声明中:</p>
+<p><code>@property (nonatomic, strong) id&lt;MyProtocol&gt; obj;</code>表明所有赋值给obj的对象都一定要遵守MyProtocol协议。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 要求保存对象的指针 保存的对象必须是遵守MyProtocol协议的</span><br><span class="line">id&lt;MyProtocol&gt; obj = <span class="comment">[<span class="comment">[Person alloc]</span> init]</span>;</span><br></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -256,13 +290,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/10/objective-c-grammar04/" rel="prev">Objective-C 语法(四) OC内存</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/23/objective-c-grammar02/" rel="next">Objective-C 语法(二) 类</a>
+              <a href="/2015/08/10/objective-c-grammar04/" rel="next">Objective-C 语法(四) OC内存</a>
             
           </div>
         </div>
@@ -403,7 +435,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类_Category"><span class="nav-number">1.</span> <span class="nav-text">分类 Category</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#声明:"><span class="nav-number">1.1.</span> <span class="nav-text">声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现:"><span class="nav-number">1.2.</span> <span class="nav-text">实现:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类的作用："><span class="nav-number">1.3.</span> <span class="nav-text">分类的作用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类注意点:"><span class="nav-number">1.4.</span> <span class="nav-text">分类注意点:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEL"><span class="nav-number">2.</span> <span class="nav-text">SEL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSLog"><span class="nav-number">3.</span> <span class="nav-text">NSLog</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block"><span class="nav-number">1.</span> <span class="nav-text">Block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protocol"><span class="nav-number">2.</span> <span class="nav-text">Protocol</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
