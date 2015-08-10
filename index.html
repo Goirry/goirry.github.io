@@ -213,12 +213,13 @@
 </ol>
 <p>定义block变量:</p>
 <ul>
-<li>无参数、无返回值 <code>void (^blockName)();</code></li>
-<li>有参数、有返回值 <code>int (^blockName)(int, int)</code></li>
+<li>无参数、无返回值 <code>void (^BlockName)();</code></li>
+<li>有参数、有返回值 <code>int (^BlockName)(int, int)</code></li>
 </ul>
-<p>利用block封装代码:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^minusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">minusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure></p>
+<p>利用block封装代码:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MinusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MinusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure>
 <p>block可以访问外部的变量。默认情况下，block内部不能修改外部的局部变量。给外部的局部变量加上<code>__block</code>关键字，就可以在block内部进行修改了。</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    <span class="keyword">sum</span>++;</span><br><span class="line">    <span class="keyword">return</span> (num * <span class="keyword">sum</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> sum = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    sum++;</span><br><span class="line">    <span class="keyword">return</span> (num * sum);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/08/10/objective-c-grammar05/#more" rel="contents">
               阅读全文 &raquo;
@@ -253,7 +254,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/10/objective-c-grammar04/" itemprop="url">
+              <a class="post-title-link" href="/2015/08/09/objective-c-grammar04/" itemprop="url">
                 Objective-C 语法(四) OC内存
               </a>
             
@@ -264,8 +265,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-10T18:15:36+08:00" content="2015-08-10">
-            2015-08-10
+          <time itemprop="dateCreated" datetime="2015-08-09T18:15:36+08:00" content="2015-08-09">
+            2015-08-09
           </time>
         </span>
 
@@ -332,7 +333,7 @@
 </li>
 </ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/10/objective-c-grammar04/#more" rel="contents">
+            <a class="btn" href="/2015/08/09/objective-c-grammar04/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

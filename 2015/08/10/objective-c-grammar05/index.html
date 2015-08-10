@@ -48,10 +48,11 @@ block和函数的相同点:
 
 定义block变量:
 
-无参数、无返回值 void (^blockName)();
-有参数、有返回值 int (^blockName)(int, int)
+无参数、无返回值 void (^BlockName)();
+有参数、有返回值 int (^BlockName)(int, int)
 
-利用block封装代码:123456">
+利用block封装代码:
+12345">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 语法(五) Block和Protocol">
 <meta property="og:url" content="http://goirry.github.io/2015/08/10/objective-c-grammar05/index.html">
@@ -67,11 +68,12 @@ block和函数的相同点:
 
 定义block变量:
 
-无参数、无返回值 void (^blockName)();
-有参数、有返回值 int (^blockName)(int, int)
+无参数、无返回值 void (^BlockName)();
+有参数、有返回值 int (^BlockName)(int, int)
 
-利用block封装代码:123456">
-<meta property="og:updated_time" content="2015-08-10T10:49:16.000Z">
+利用block封装代码:
+12345">
+<meta property="og:updated_time" content="2015-08-10T11:04:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C 语法(五) Block和Protocol">
 <meta name="twitter:description" content="Blockblock用来保存一段代码，可以写在函数内部，可以运行时保存一段代码(函数做不到)。
@@ -85,10 +87,11 @@ block和函数的相同点:
 
 定义block变量:
 
-无参数、无返回值 void (^blockName)();
-有参数、有返回值 int (^blockName)(int, int)
+无参数、无返回值 void (^BlockName)();
+有参数、有返回值 int (^BlockName)(int, int)
 
-利用block封装代码:123456">
+利用block封装代码:
+12345">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -251,27 +254,28 @@ block和函数的相同点:
 </ol>
 <p>定义block变量:</p>
 <ul>
-<li>无参数、无返回值 <code>void (^blockName)();</code></li>
-<li>有参数、有返回值 <code>int (^blockName)(int, int)</code></li>
+<li>无参数、无返回值 <code>void (^BlockName)();</code></li>
+<li>有参数、有返回值 <code>int (^BlockName)(int, int)</code></li>
 </ul>
-<p>利用block封装代码:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    NSLog(@<span class="string">"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^minusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">minusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure></p>
+<p>利用block封装代码:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">^() &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无参可以省略括号, 如下:</span></span><br><span class="line">^&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Hello!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参</span></span><br><span class="line">^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MinusBlock)(<span class="keyword">int</span>, <span class="keyword">int</span>) = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a - b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MinusBlock(<span class="number">5</span>, <span class="number">3</span>); <span class="comment">// 调用</span></span><br></pre></td></tr></table></figure>
 <p>block可以访问外部的变量。默认情况下，block内部不能修改外部的局部变量。给外部的局部变量加上<code>__block</code>关键字，就可以在block内部进行修改了。</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    <span class="keyword">sum</span>++;</span><br><span class="line">    <span class="keyword">return</span> (num * <span class="keyword">sum</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__block <span class="keyword">int</span> sum = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> (^MyBlock)(<span class="keyword">int</span>) = ^(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    sum++;</span><br><span class="line">    <span class="keyword">return</span> (num * sum);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>可以利用typedef定义block变量:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(^MySum)</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">MySum sumBlock = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> (^MySum)(<span class="keyword">int</span>, <span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">MySum sumBlock = ^(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b);	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><span style="color:#e73751">Tips:</span> 苹果官方建议尽量多使用block。在多线程、异步任务、集合遍历、集合排序、动画转场用的很多。</p>
 <h2 id="Protocol">Protocol</h2><p>可以用来声明一大堆方法，但是不能声明成员变量。<br>只要某个类遵守了这个协议，就相当于拥有这个协议中的所有方法声明。<br>只要父类遵守了某个协议，就相当于子类也遵守了该协议。</p>
 <p>某个类遵守协议:</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@protocol</span> ProtocolName; <span class="comment">// 相比#import "ProtocolName.h"性能更好, 理由与@class相似</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@interface</span> <span class="attribute">ClassName </span>: SuperClass &lt;ProtocolName&gt; <span class="comment">// 支持多协议 &lt;协议1, 协议2, 协议3&gt;</span></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明协议 与#import相比，"ProtocolName.h"性能更好，理由与@class相似</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ProtocolName</span>; </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义遵守协议的类 支持多协议 &lt;协议1, 协议2, 协议3&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ClassName</span> : <span class="title">SuperClass</span> &lt;<span class="title">ProtocolName</span>&gt; </span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>协议中的修饰关键字:<br><code>@required</code> 要求实现的方法，不实现会发出警告。<code>(默认)</code><br><code>@optional</code> 不要求实现的方法，可选性实现。</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下的func1和func2是要求实现的，func3是可选实现的。</span></span><br><span class="line"><span class="annotation">@required</span></span><br><span class="line">- (<span class="keyword">void</span>) func1;</span><br><span class="line">- (<span class="keyword">void</span>) func2;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@optional</span></span><br><span class="line">- (<span class="keyword">void</span>) func3;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下的func1和func2是要求实现的，func3是可选实现的。</span></span><br><span class="line"><span class="keyword">@required</span></span><br><span class="line">- (<span class="keyword">void</span>) func1;</span><br><span class="line">- (<span class="keyword">void</span>) func2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@optional</span></span><br><span class="line">- (<span class="keyword">void</span>) func3;</span><br></pre></td></tr></table></figure>
 <p>协议使用的场合:<br>最多的是用在代理模式、观察者模式上。</p>
 <p>基协议:<br><code>NSObject</code>是一个基类(最根本最基本的类)，还有一个协议，名字也叫<code>NSObject</code>，是基协议。建议每个新的协议都要遵守NSObject协议。</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本协议的定义</span></span><br><span class="line"><span class="variable">@protocol</span> ProtocolName &lt;NSObject&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法声明</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本协议的定义</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">ProtocolName</span> &lt;<span class="title">NSObject</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法声明</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>类的属性声明中:</p>
 <p><code>@property (nonatomic, strong) id&lt;MyProtocol&gt; obj;</code>表明所有赋值给obj的对象都一定要遵守MyProtocol协议。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 要求保存对象的指针 保存的对象必须是遵守MyProtocol协议的</span><br><span class="line">id&lt;MyProtocol&gt; obj = <span class="comment">[<span class="comment">[Person alloc]</span> init]</span>;</span><br></pre></td></tr></table></figure></span>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要求保存对象的指针 保存的对象必须是遵守MyProtocol协议的</span></span><br><span class="line"><span class="keyword">id</span>&lt;MyProtocol&gt; obj = [[Person alloc] init];</span><br></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -294,7 +298,7 @@ block和函数的相同点:
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/10/objective-c-grammar04/" rel="next">Objective-C 语法(四) OC内存</a>
+              <a href="/2015/08/09/objective-c-grammar04/" rel="next">Objective-C 语法(四) OC内存</a>
             
           </div>
         </div>
