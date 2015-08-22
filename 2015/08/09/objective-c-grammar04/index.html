@@ -49,7 +49,7 @@
 每个OC对象内部专门有4个字节的存储空间来存引用计数器。
 给对象发送一条retain消息，引用计数器+1，retain方法返回对象本身。给对象发送一条release消息， 引用计数器-1。给对象发送retainCount消息获得引用计数器值。
 僵尸对象所占用内存已经被回收的对象，">
-<meta property="og:updated_time" content="2015-08-10T10:55:33.000Z">
+<meta property="og:updated_time" content="2015-08-22T06:28:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C 语法(四) OC内存">
 <meta name="twitter:description" content="OC内存每个OC对象都有自己的引用计数器，是整数，表示该对象被引用的次数。当引用计数器为0的时候，对象就会被系统回收。
@@ -289,7 +289,7 @@
 <li>当一个对象调用<code>autorelease</code>方式时，会将这个对象放到栈顶的释放池。</li>
 </ol>
 <p><span style="color:#e73751">Tips1:</span> 系统自带的方法里面没有包含<code>alloc</code>、<code>new</code>、<code>copy</code>，说明返回的对象都是<code>autorelease</code>的。<br><span style="color:#e73751">Tips2:</span> 被<code>retain</code>过的属性，必须在<code>dealloc</code>方法中<code>release</code>该属性。</p>
-<h3 id="ARC">ARC</h3><p>ARC是自动引用计数，是<code>LLVM 3.1</code>编译器特性。</p>
+<h3 id="ARC">ARC</h3><p>ARC是自动引用计数，是<code>LLVM 3.0</code>编译器特性。</p>
 <p>ARC的判断准则: 强引用保证对象的存在，或没有强引用，则对象被自动销毁</p>
 <p>指针在ARC中分为<code>2</code>种:</p>
 <ul>
