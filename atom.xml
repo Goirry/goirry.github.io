@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://goirry.github.io/"/>
-  <updated>2015-10-31T07:42:24.000Z</updated>
+  <updated>2015-10-31T09:17:20.000Z</updated>
   <id>http://goirry.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://goirry.github.io/2015/09/15/AppViewCircleLife/"/>
     <id>http://goirry.github.io/2015/09/15/AppViewCircleLife/</id>
     <published>2015-09-15T10:12:36.000Z</published>
-    <updated>2015-10-31T07:42:24.000Z</updated>
+    <updated>2015-10-31T09:17:20.000Z</updated>
     <content type="html"><![CDATA[<p>应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。</p>
 <h2 id="应用生命周期的代理方法">应用生命周期的代理方法</h2><p>UIApplicationDelegate协议的代理方法:</p>
 <p>应用启动但还没进入状态保存时调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application willFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span></span><br></pre></td></tr></table></figure></p>
@@ -29,10 +29,33 @@
 <p>当程序退到后台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
 <p>当程序进入前台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillEnterForeground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
 <p>当程序将要退出时被调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="UIViewController的生命周期">UIViewController的生命周期</h2><ol>
+<li><p>loadView<br>此方法用在<code>初始化关键view</code>, 当访问ViewController的view属性时，view如果此时是nil，那么ViewController会自动调用loadView方法来初始化一个UIView并赋值给<code>self.view</code>属性。如果没有先调用了<code>[supper loadView];</code>，也没有对view初始化，不能调用view的<code>getter</code>方法，否则将导致死循环。<br>如果没有重载loadView方法，则UIViewController会从<code>Nib</code>或<code>StoryBoard</code>中查找默认的loadView，默认的loadView会返回一个<code>空白的UIView对象</code>。</p>
+</li>
+<li><p>viewDidLoad<br>当ViewController的view对象载入内存后调用，用于对view进行额外的初始化操作。</p>
+</li>
+<li><p>viewWillAppear<br>在view即将添加到视图层级中(显示给用户看)且任意显示动画切换之前调用(这个时候supperView还是nil)。这个方法中完成任何与视图显示相关的任务，例如改变视图方向、状态栏方向、视图显示样式等</p>
+</li>
+<li><p>viewDidAppear<br>在view被添加到视图层级中，显示动画切换之后调用(这时view已经添加到supperView中)。在这个方法中执行视图显示相关附件任务，如果重载了这个方法，必须在方法中调用<code>[supper viewDidAppear];</code>。</p>
+</li>
+<li><p>viewWillLayoutSubviews<br>view即将布局其子视图，会在view调用<code>layoutSubviews</code>之前调用。比如view的<code>bounds</code>属性改变了(例如状态栏从不显示到显示，视图方向变化)，要调整Subviews的位置，在调整之前要做的一些工作就可以在该方法中实现。</p>
+</li>
+<li><p>viewDidLayoutSubviews<br>view已经布局其子视图，会在view调用完<code>layoutSubviews</code>后调用。</p>
+</li>
+<li><p>viewWillDisappear<br>view即将从superView中移除且移除动画切换之前，此时还没有调用<code>removeFromSuperview</code>。</p>
+</li>
+<li><p>viewDidDisappear<br>view从superView中移除，移除动画切换之后调用，此时已调用<code>removeFromSuperview</code>。</p>
+</li>
+<li><p>viewWillUnload<br>在view对象从内存中释放之前调用。在<code>iOS6.0</code>开始就废弃了，该方法不再会调用。</p>
+</li>
+<li><p>viewDidUnload<br>在view对象从内存中释放之后调用，此时view为<code>nil</code>。在<code>iOS6.0</code>开始就废弃了，该方法不再会调用。</p>
+</li>
+</ol>
+<a id="more"></a>
 <h2 id="生命周期方法的调用顺序">生命周期方法的调用顺序</h2><p>清楚生命周期就清楚了应用的整体流程，对代码的执行顺序有所了解，知道系统会在什么情况下调用什么方法，也就可以对程序更加进一步的理解和掌控。闲话不多说，下面我们来看一下应用从启动到终止都调用了哪些方法:</p>
 <ul>
 <li><p>启动应用</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span> <span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line">RootViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span> <span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line">RootViewController loadView</span><br><span class="line">RootViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController viewWillLayoutSubviews</span><br><span class="line">RottViewController viewDidLayoutSubviews</span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>从RootViewController通过<code>Push方式</code>跳转到SecondViewController</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，4、5调换顺序。</span></span><br></pre></td></tr></table></figure>
@@ -52,7 +75,6 @@
 </ul>
 <p>以上就是程序在各种状态下自动调用方法的顺序，这是本人写的Demo打印的顺序，两个文件同时执行方法的顺序可能会出现误差，但是单个文件当中的方法执行顺序是一定的。</p>
 <p>不过看到两个<code>ViewController</code>跳转时，执行顺序居然会是交叉调用的，也是很有意思。</p>
-<a id="more"></a>
 <h2 id="生命周期的流程图片">生命周期的流程图片</h2><p>当应用从开始加载到进入后台:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_background.png" alt="" title="应用从开始加载到进入后台的生命周期流程图"></p>
 <p>当用户切换应用时:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_foreground.png" alt="" title="用户切换应用时的生命周期流程图"></p>
 <p>ViewController的生命周期:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/UIViewController_Life_Circle.jpg" alt="" title="ViewController的生命周期图"></p>
@@ -69,29 +91,28 @@
 <p>当程序退到后台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
 <p>当程序进入前台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillEnterForeground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
 <p>当程序将要退出时被调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="生命周期方法的调用顺序">生命周期方法的调用顺序</h2><p>清楚生命周期就清楚了应用的整体流程，对代码的执行顺序有所了解，知道系统会在什么情况下调用什么方法，也就可以对程序更加进一步的理解和掌控。闲话不多说，下面我们来看一下应用从启动到终止都调用了哪些方法:</p>
-<ul>
-<li><p>启动应用</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span> <span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line">RootViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+<h2 id="UIViewController的生命周期">UIViewController的生命周期</h2><ol>
+<li><p>loadView<br>此方法用在<code>初始化关键view</code>, 当访问ViewController的view属性时，view如果此时是nil，那么ViewController会自动调用loadView方法来初始化一个UIView并赋值给<code>self.view</code>属性。如果没有先调用了<code>[supper loadView];</code>，也没有对view初始化，不能调用view的<code>getter</code>方法，否则将导致死循环。<br>如果没有重载loadView方法，则UIViewController会从<code>Nib</code>或<code>StoryBoard</code>中查找默认的loadView，默认的loadView会返回一个<code>空白的UIView对象</code>。</p>
 </li>
-<li><p>从RootViewController通过<code>Push方式</code>跳转到SecondViewController</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，4、5调换顺序。</span></span><br></pre></td></tr></table></figure>
+<li><p>viewDidLoad<br>当ViewController的view对象载入内存后调用，用于对view进行额外的初始化操作。</p>
 </li>
-<li><p>从SecondViewController通过<code>Pop方式</code>跳转到RootViewController</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line">SecondViewController dealloc</span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，3、4调换顺序</span></span><br></pre></td></tr></table></figure>
+<li><p>viewWillAppear<br>在view即将添加到视图层级中(显示给用户看)且任意显示动画切换之前调用(这个时候supperView还是nil)。这个方法中完成任何与视图显示相关的任务，例如改变视图方向、状态栏方向、视图显示样式等</p>
 </li>
-<li><p>按下Home键使App进入后台(<code>ViewController不会做响应</code>)</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillResignActive:</span></span><br><span class="line"><span class="label">applicationDidEnterBackground:</span></span><br></pre></td></tr></table></figure>
+<li><p>viewDidAppear<br>在view被添加到视图层级中，显示动画切换之后调用(这时view已经添加到supperView中)。在这个方法中执行视图显示相关附件任务，如果重载了这个方法，必须在方法中调用<code>[supper viewDidAppear];</code>。</p>
 </li>
-<li><p>点击App从后台进入到前台(<code>ViewController不会做响应</code>)</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillEnterForeground:</span></span><br><span class="line"><span class="label">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+<li><p>viewWillLayoutSubviews<br>view即将布局其子视图，会在view调用<code>layoutSubviews</code>之前调用。比如view的<code>bounds</code>属性改变了(例如状态栏从不显示到显示，视图方向变化)，要调整Subviews的位置，在调整之前要做的一些工作就可以在该方法中实现。</p>
 </li>
-<li><p>下拉系统的通知栏或上拉出系统的底部控制中心(<code>ViewController不会做响应</code>)</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">applicationWillResignActive:</span> <span class="comment">// Show</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span> <span class="comment">// Hide</span></span><br></pre></td></tr></table></figure>
+<li><p>viewDidLayoutSubviews<br>view已经布局其子视图，会在view调用完<code>layoutSubviews</code>后调用。</p>
 </li>
-</ul>
-<p>以上就是程序在各种状态下自动调用方法的顺序，这是本人写的Demo打印的顺序，两个文件同时执行方法的顺序可能会出现误差，但是单个文件当中的方法执行顺序是一定的。</p>
-<p>不过看到两个<code>ViewController</code>跳转时，执行顺序居然会是交叉调用的，也是很有意思。</p>]]>
+<li><p>viewWillDisappear<br>view即将从superView中移除且移除动画切换之前，此时还没有调用<code>removeFromSuperview</code>。</p>
+</li>
+<li><p>viewDidDisappear<br>view从superView中移除，移除动画切换之后调用，此时已调用<code>removeFromSuperview</code>。</p>
+</li>
+<li><p>viewWillUnload<br>在view对象从内存中释放之前调用。在<code>iOS6.0</code>开始就废弃了，该方法不再会调用。</p>
+</li>
+<li><p>viewDidUnload<br>在view对象从内存中释放之后调用，此时view为<code>nil</code>。在<code>iOS6.0</code>开始就废弃了，该方法不再会调用。</p>
+</li>
+</ol>]]>
     
     </summary>
     
@@ -110,7 +131,7 @@
     <link href="http://goirry.github.io/2015/08/11/foundation-base/"/>
     <id>http://goirry.github.io/2015/08/11/foundation-base/</id>
     <published>2015-08-11T10:28:12.000Z</published>
-    <updated>2015-09-15T10:20:45.000Z</updated>
+    <updated>2015-09-16T11:32:25.000Z</updated>
     <content type="html"><![CDATA[<p>首先，<code>Foundation框架</code>是iOS开发当中的基本框架，所以以下的知识点都是iOS开发中最最基础的。</p>
 <h2 id="结构体">结构体</h2><ul>
 <li><code>NSRange(location, length)</code></li>
