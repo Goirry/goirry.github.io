@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="OC,iOS," />
+  <meta name="keywords" content="Foundation,OC,iOS," />
 
 
 
@@ -57,7 +57,7 @@ NSSize/CGSize(width, height)
 NSRect/CGRect(CGPoint, CGSize)
 
 12345678910111213141516171819202122">
-<meta property="og:updated_time" content="2015-08-19T11:38:34.000Z">
+<meta property="og:updated_time" content="2015-09-15T10:20:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Foundation基础">
 <meta name="twitter:description" content="首先，Foundation框架是iOS开发当中的基本框架，所以以下的知识点都是iOS开发中最最基础的。
@@ -277,7 +277,7 @@ NSRect/CGRect(CGPoint, CGSize)
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *num = [<span class="built_in">NSNumber</span> numberWithInt:<span class="number">10</span>]; <span class="comment">// int -&gt; NSNumber 转换</span></span><br><span class="line"><span class="comment">// 基本数据类型 --&gt; OC对象类型 转换的便捷写法 编译器特性</span></span><br><span class="line"><span class="built_in">NSNumber</span> *num1 = @<span class="number">20.0</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *num2 = @YES;</span><br><span class="line">@<span class="string">'A'</span>; <span class="comment">// 字符 -&gt; NSNumber对象 值为A的ASCII码值65</span></span><br><span class="line"><span class="keyword">int</span> num3 = <span class="number">12</span>;</span><br><span class="line">@(num3); <span class="comment">// 变量 -&gt; NSNumber对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// OC集合类中都不能存放非OC对象 所以10必须包装成对象类存放进字典</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *dictionary = @&#123;<span class="string">@"number"</span>: <span class="string">@"jack"</span>, <span class="string">@"age"</span>: num&#125;;</span><br><span class="line"><span class="comment">// NSNumber --&gt; int 转换</span></span><br><span class="line"><span class="keyword">int</span> a = [num intValue];</span><br><span class="line"><span class="comment">// NSNumber --&gt; double 转换</span></span><br><span class="line"><span class="keyword">int</span> b = [num1 doubleValue];</span><br><span class="line"><span class="built_in">NSString</span> *strNum = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%d"</span>, a];</span><br><span class="line"><span class="comment">// NSString --&gt; int 转换</span></span><br><span class="line">[strNum intValue];</span><br></pre></td></tr></table></figure>
 <h2 id="NSValue">NSValue</h2><p><code>NSValue</code>才是最终的包装类，才真正具备包装成对象的功能，而且不管是什么类型，都能包装。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 结构体 --&gt; OC对象类型 NSValue</span></span><br><span class="line"><span class="built_in">NSValue</span> *value1 = [<span class="built_in">NSValue</span> valueWithPoint:<span class="built_in">CGPointMake</span>(<span class="number">10</span>, <span class="number">10</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value2 = [<span class="built_in">NSValue</span> valueWithSize:<span class="built_in">CGSizeMake</span>(<span class="number">200</span>, <span class="number">200</span>)];</span><br><span class="line"><span class="built_in">NSArray</span> *arr1 = @[value1, value2];</span><br><span class="line"><span class="comment">// NSValue --&gt; 结构体</span></span><br><span class="line">[value1 pointValue]; </span><br><span class="line">[value2 sizeValue];</span><br></pre></td></tr></table></figure>
-<h2 id="NSDate">NSDate</h2><p>NSDate是时间类，OC中时间单位是秒，不是毫秒。Java才是毫秒，Php的时间单位也是秒。</p>
+<h2 id="NSDate">NSDate</h2><p><code>NSDate</code>是时间类，OC中时间单位是秒，不是毫秒。Java才是毫秒，PHP的时间单位也是秒。</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建当前时间</span></span><br><span class="line"><span class="built_in">NSDate</span> *date = [<span class="built_in">NSDate</span> date];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"0时区的时间是:%@"</span>,date);</span><br><span class="line"><span class="comment">// 创建出比现在时间晚5秒的时间</span></span><br><span class="line"><span class="built_in">NSDate</span> *date1 = [<span class="built_in">NSDate</span> dateWithTimeInterval:<span class="number">5</span> sinceDate:date];</span><br><span class="line"><span class="comment">// 返回时间的秒值</span></span><br><span class="line"><span class="built_in">NSTimeInterval</span> seconds = [date1 timeIntervalSince1970];</span><br><span class="line"></span><br><span class="line"><span class="comment">// ---日期格式化---</span></span><br><span class="line"><span class="comment">// 初始化时间格式类</span></span><br><span class="line"><span class="built_in">NSDateFormatter</span> *fomatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</span><br><span class="line"><span class="comment">// 用字符串的形式设置时间格式</span></span><br><span class="line">[fomatter setDateFormat:<span class="string">@"yyyy-MM-dd HH:mm:ss"</span>];</span><br><span class="line"><span class="comment">// NSDate --&gt; NSString 转换</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"格式化时间:%@"</span>, [fomatter stringFromDate:date]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// NSString --&gt; NSDate 转换</span></span><br><span class="line"><span class="built_in">NSString</span> *time = <span class="string">@"2011/09/10 15:24"</span>;</span><br><span class="line">[fomatter setDateFormat:<span class="string">@"yyyy/mm/dd HH:mm"</span>];</span><br><span class="line"><span class="built_in">NSDate</span> *date2 = [fomatter dateFromString:time];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"订制时间:%@"</span>, date2);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 日期类 初始化格林高利日期</span></span><br><span class="line"><span class="built_in">NSCalendar</span> *calendar = [[<span class="built_in">NSCalendar</span> alloc] initWithCalendarIdentifier:<span class="built_in">NSGregorianCalendar</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// NSDateComponents表示时间时,必须添加单位,否则取出的单位时间会是错误的数值</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *components = [calendar components:<span class="built_in">NSYearCalendarUnit</span>|<span class="built_in">NSMonthCalendarUnit</span>|<span class="built_in">NSDayCalendarUnit</span>|<span class="built_in">NSHourCalendarUnit</span>|<span class="built_in">NSMinuteCalendarUnit</span>|<span class="built_in">NSSecondCalendarUnit</span> fromDate:date];</span><br><span class="line">components<span class="variable">.hour</span> = <span class="number">0</span>;</span><br><span class="line">components<span class="variable">.minute</span> = <span class="number">0</span>;</span><br><span class="line">components<span class="variable">.second</span> = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">NSDate</span> *newDate = [calendar dateFromComponents:components];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Today:%@"</span>, newDate);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据两个时间点，定义NSDateComponents对象，从而获取这两个时间点的时差</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *dateComponents = [calendar components:<span class="built_in">NSYearCalendarUnit</span> fromDate:[<span class="built_in">NSDate</span> dateWithTimeIntervalSince1970:<span class="number">0</span>] toDate:[<span class="built_in">NSDate</span> date] options:<span class="number">0</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"number of years:%i"</span>, dateComponents<span class="variable">.year</span>);</span><br></pre></td></tr></table></figure></span>
       
     </div>
@@ -285,6 +285,8 @@ NSRect/CGRect(CGPoint, CGSize)
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/Foundation/" rel="tag">#Foundation</a>
           
             <a href="/tags/OC/" rel="tag">#OC</a>
           
@@ -296,6 +298,8 @@ NSRect/CGRect(CGPoint, CGSize)
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/15/AppViewCircleLife/" rel="prev">应用及视图的生命周期</a>
             
           </div>
 
@@ -368,7 +372,7 @@ NSRect/CGRect(CGPoint, CGSize)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -382,7 +386,7 @@ NSRect/CGRect(CGPoint, CGSize)
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

@@ -160,6 +160,121 @@
           
           
             
+              <a class="post-title-link" href="/2015/09/15/AppViewCircleLife/" itemprop="url">
+                应用及视图的生命周期
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-15T18:12:36+08:00" content="2015-09-15">
+            2015-09-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/15/AppViewCircleLife/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/15/AppViewCircleLife/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。</p>
+<h2 id="应用生命周期的代理方法">应用生命周期的代理方法</h2><p>UIApplicationDelegate协议的代理方法:</p>
+<p>应用启动但还没进入状态保存时调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application willFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span></span><br></pre></td></tr></table></figure></p>
+<p>应用启动基本完成程序准备开始运行时调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span></span><br></pre></td></tr></table></figure></p>
+<p>当应用程序进入活动状态调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当应用程序将要进入非活动状态调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillResignActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序退到后台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序进入前台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillEnterForeground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序将要退出时被调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="生命周期方法的调用顺序">生命周期方法的调用顺序</h2><p>清楚生命周期就清楚了应用的整体流程，对代码的执行顺序有所了解，知道系统会在什么情况下调用什么方法，也就可以对程序更加进一步的理解和掌控。闲话不多说，下面我们来看一下应用从启动到终止都调用了哪些方法:</p>
+<ul>
+<li><p>启动应用</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span> <span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line">RootViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从RootViewController通过<code>Push方式</code>跳转到SecondViewController</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，4、5调换顺序。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从SecondViewController通过<code>Pop方式</code>跳转到RootViewController</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line">SecondViewController dealloc</span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，3、4调换顺序</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按下Home键使App进入后台(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillResignActive:</span></span><br><span class="line"><span class="label">applicationDidEnterBackground:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点击App从后台进入到前台(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillEnterForeground:</span></span><br><span class="line"><span class="label">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下拉系统的通知栏或上拉出系统的底部控制中心(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">applicationWillResignActive:</span> <span class="comment">// Show</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span> <span class="comment">// Hide</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上就是程序在各种状态下自动调用方法的顺序，这是本人写的Demo打印的顺序，两个文件同时执行方法的顺序可能会出现误差，但是单个文件当中的方法执行顺序是一定的。</p>
+<p>不过看到两个<code>ViewController</code>跳转时，执行顺序居然会是交叉调用的，也是很有意思。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/15/AppViewCircleLife/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/11/foundation-base/" itemprop="url">
                 Foundation基础
               </a>
@@ -557,105 +672,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/04/23/objective-c-grammar02/" itemprop="url">
-                Objective-C 语法(二) 类
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-04-23T17:28:41+08:00" content="2015-04-23">
-            2015-04-23
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/OC/" itemprop="url" rel="index"><span itemprop="name">OC</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/04/23/objective-c-grammar02/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/23/objective-c-grammar02/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>类是面向对象语言中相当重要的一个知识点，也是最常用的知识点。</p>
-<h2 id="类的概念">类的概念</h2><blockquote>
-<p>OC当中的类其实原理就是C中的结构体</p>
-<p>OC中创建一个类需要有两个步骤：类的声明、类的实现</p>
-</blockquote>
-<h2 id="类的声明和实现">类的声明和实现</h2><ul>
-<li>类的声明：<code>@interface 类名 : 父类(继承类)</code><br> 大多都继承<code>NSObject</code>(基类)</li>
-<li>类的实现：<code>@implementation 类名</code></li>
-</ul>
-<p>类的声明和类的实现都必须以<code>@end</code>结束</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类的声明 继承NSObject</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Car</span> : <span class="title">NSObject</span></span></span><br><span class="line">&#123;<span class="comment">//声明对象的属性 成员变量默认会初始化为0</span></span><br><span class="line">    <span class="comment">//@public可以让外部的指针间接访问对象内部的成员变量</span></span><br><span class="line">    <span class="keyword">@public</span></span><br><span class="line">    <span class="keyword">int</span> _wheels;<span class="comment">//类的声明里的成员变量不允许初始化赋值,只能用来声明</span></span><br><span class="line">    <span class="keyword">double</span> _speed;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//只要是OC对象的方法,必须以减号 - 开头</span></span><br><span class="line"><span class="comment">//OC方法中任何数据类型都必须用小括号()括住</span></span><br><span class="line"><span class="comment">//OC方法中的小括号(): 只用来括住数据类型</span></span><br><span class="line">- (<span class="keyword">void</span>) run;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//类的实现 用来实现类的方法</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Car</span></span></span><br><span class="line"><span class="comment">//方法的实现</span></span><br><span class="line">- (<span class="keyword">void</span>) run</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"调用了run方法"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//利用类来创建对象或者调用类的方法 [行为执行者 行为名称]</span></span><br><span class="line">    <span class="comment">//new出的对象得到的都是指针，必须用对应类型的指针来指向</span></span><br><span class="line">    Car *myCar = [Car new];</span><br><span class="line">    <span class="comment">//用指针调用对象的属性，赋值或取值</span></span><br><span class="line">    myCar-&gt;wheels = <span class="number">4</span>;</span><br><span class="line">    myCar<span class="variable">.speed</span>  = <span class="number">100</span>;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"车子有%d个轮子, 时速是%fkm/h"</span>, myCar-&gt;wheels, myCar-&gt;speed);</span><br><span class="line">    [myCar run];<span class="comment">//OC对象只能通过指针来操作 给myCar所指向对象发送一条run消息</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>任何OC对象都是通过指针来操控的。</p>
-<p>每一个对象中都有一个<code>isa</code>指针指向对应的类，通过对象调用类中方法时，就是顺着<code>isa</code>指针找到类中的方法。</p>
-</blockquote>
-<p>成员变量是每个对象都有一份，方法则是共用同一份<br>成员变量和方法都不能用<code>static</code>等关键字修饰，不要跟C语言弄混淆</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/04/23/objective-c-grammar02/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -695,7 +711,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -709,7 +725,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

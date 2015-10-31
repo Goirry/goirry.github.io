@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="OC,Objective-C," />
+  <meta name="keywords" content="OC,iOS,生命周期," />
 
 
 
@@ -37,28 +37,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
+<meta name="description" content="应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。
+应用生命周期的代理方法UIApplicationDelegate协议的代理方法:
+应用启动但还没进入状态保存时调用1- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Objective-C 语法(三) Category和SEL">
-<meta property="og:url" content="http://goirry.github.io/2015/08/08/objective-c-grammar03/index.html">
+<meta property="og:title" content="应用及视图的生命周期">
+<meta property="og:url" content="http://goirry.github.io/2015/09/15/AppViewCircleLife/index.html">
 <meta property="og:site_name" content="Goirry's Blog">
-<meta property="og:description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
-<meta property="og:updated_time" content="2015-08-08T08:59:12.000Z">
+<meta property="og:description" content="应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。
+应用生命周期的代理方法UIApplicationDelegate协议的代理方法:
+应用启动但还没进入状态保存时调用1- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions">
+<meta property="og:image" content="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_background.png">
+<meta property="og:image" content="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_foreground.png">
+<meta property="og:image" content="http://7xnejb.com1.z0.glb.clouddn.com/images/UIViewController_Life_Circle.jpg">
+<meta property="og:updated_time" content="2015-10-31T07:42:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Objective-C 语法(三) Category和SEL">
-<meta name="twitter:description" content="分类 Category分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。
-声明:12@interface 类名 (分类名)@end
-实现:12@implementation 类名 (分类名)@end
-分类的作用：在不改变原来类内容的基础上，可以为类增加一些代码。
-分类注意点:1.分类只能增加方法，不能增加成员变量。2.分类方法实现中可以访问原类中的声明的成员变量。3.">
+<meta name="twitter:title" content="应用及视图的生命周期">
+<meta name="twitter:description" content="应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。
+应用生命周期的代理方法UIApplicationDelegate协议的代理方法:
+应用启动但还没进入状态保存时调用1- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -68,7 +65,7 @@
   };
 </script>
 
-    <title> Objective-C 语法(三) Category和SEL // Goirry's Blog </title>
+    <title> 应用及视图的生命周期 // Goirry's Blog </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -171,7 +168,7 @@
           
           
             
-              Objective-C 语法(三) Category和SEL
+              应用及视图的生命周期
             
           
         </h1>
@@ -180,8 +177,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-08T16:43:13+08:00" content="2015-08-08">
-            2015-08-08
+          <time itemprop="dateCreated" datetime="2015-09-15T18:12:36+08:00" content="2015-09-15">
+            2015-09-15
           </time>
         </span>
 
@@ -189,7 +186,7 @@
           <span class="post-category" >
             &nbsp; | &nbsp; 分类于
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/OC/" itemprop="url" rel="index"><span itemprop="name">OC</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
 
               
               
@@ -202,8 +199,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/08/objective-c-grammar03/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/08/objective-c-grammar03/" itemprop="commentsCount"></span>
+              <a href="/2015/09/15/AppViewCircleLife/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/15/AppViewCircleLife/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -217,34 +214,45 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="分类_Category">分类 Category</h2><p>分类可以给某一个类扩充一些方法（在不修改原来类代码的基础上），很适合做类的拓展。</p>
-<h3 id="声明:">声明:</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> 类名 (分类名)</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
-<h3 id="实现:">实现:</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> 类名 (分类名)</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
-<h3 id="分类的作用：">分类的作用：</h3><p>在不改变原来类内容的基础上，可以为类增加一些代码。</p>
-<h3 id="分类注意点:">分类注意点:</h3><p>1.分类只能增加方法，不能增加成员变量。<br>2.分类方法实现中可以访问原类中的声明的成员变量。<br>3.分类可以重写原类中的方法。<br>4.方法调用的优先级: 分类 -&gt; 原类 -&gt; 父类</p>
-<p>当程序启动的时候，就会加载一次项目中所有的类，类加载完毕后就会调用<code>+ load</code>方法。当第一次使用这个类的时候，就会调用一次<code>+ initialize</code>方法。<br>先加载父类，再加载子类。先初始化父类，再初始化子类。<br>分类必定在原类之后加载，最后参与编译的分类具有最高优先级。</p>
+        <span itemprop="articleBody"><p>应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。</p>
+<h2 id="应用生命周期的代理方法">应用生命周期的代理方法</h2><p>UIApplicationDelegate协议的代理方法:</p>
+<p>应用启动但还没进入状态保存时调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application willFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span></span><br></pre></td></tr></table></figure></p>
+<p>应用启动基本完成程序准备开始运行时调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span></span><br></pre></td></tr></table></figure></p>
+<p>当应用程序进入活动状态调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当应用程序将要进入非活动状态调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillResignActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序退到后台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序进入前台的时候调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillEnterForeground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<p>当程序将要退出时被调用<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="生命周期方法的调用顺序">生命周期方法的调用顺序</h2><p>清楚生命周期就清楚了应用的整体流程，对代码的执行顺序有所了解，知道系统会在什么情况下调用什么方法，也就可以对程序更加进一步的理解和掌控。闲话不多说，下面我们来看一下应用从启动到终止都调用了哪些方法:</p>
+<ul>
+<li><p>启动应用</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">application:</span> <span class="string">didFinishLaunchingWithOptions:</span></span><br><span class="line">RootViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从RootViewController通过<code>Push方式</code>跳转到SecondViewController</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewDidLoad:</span></span><br><span class="line">RootViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewWillAppear:</span></span><br><span class="line">RootViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidAppear:</span></span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，4、5调换顺序。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从SecondViewController通过<code>Pop方式</code>跳转到RootViewController</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SecondViewController <span class="string">viewWillDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewWillAppear:</span></span><br><span class="line">SecondViewController <span class="string">viewDidDisappear:</span></span><br><span class="line">RootViewController <span class="string">viewDidAppear:</span></span><br><span class="line">SecondViewController dealloc</span><br><span class="line"><span class="comment">// 通过Present方式跳转的话，3、4调换顺序</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按下Home键使App进入后台(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillResignActive:</span></span><br><span class="line"><span class="label">applicationDidEnterBackground:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>点击App从后台进入到前台(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">applicationWillEnterForeground:</span></span><br><span class="line"><span class="label">applicationDidBecomeActive:</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下拉系统的通知栏或上拉出系统的底部控制中心(<code>ViewController不会做响应</code>)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">applicationWillResignActive:</span> <span class="comment">// Show</span></span><br><span class="line"><span class="string">applicationDidBecomeActive:</span> <span class="comment">// Hide</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上就是程序在各种状态下自动调用方法的顺序，这是本人写的Demo打印的顺序，两个文件同时执行方法的顺序可能会出现误差，但是单个文件当中的方法执行顺序是一定的。</p>
+<p>不过看到两个<code>ViewController</code>跳转时，执行顺序居然会是交叉调用的，也是很有意思。</p>
 <a id="more"></a>
-<h2 id="SEL">SEL</h2><p>SEL其实是对方法的一种包装，将方法包装成一个<code>SEL类型</code>的数据，所以SEL是一种数据类型。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person *p = [[Person alloc] init];</span><br><span class="line">[p test];</span><br></pre></td></tr></table></figure>
-<p>调用方法时，其实有3个步骤:</p>
-<ol>
-<li>把test先包装成SEL类型的数据。</li>
-<li>根据SEL数据找到对应的内存中的方法地址。</li>
-<li>根据方法地址调用对应的方法。</li>
-</ol>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[p performSelector:<span class="keyword">@selector</span>(test)]; <span class="comment">// 同样也是调用test方法</span></span><br></pre></td></tr></table></figure>
-<p><code>performSelector:</code>是一个对象方法，返回<code>id</code>类型数据。要求传入<code>SEL数据</code>的参数<br><code>@selector</code>就返回一个<code>SEL数据</code>，传入方法名作为参数就可以把方法名包装成<code>SEL数据</code>。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下两个方法是同样效果</span></span><br><span class="line">[p <span class="string">test2:</span>@<span class="string">"123"</span>];</span><br><span class="line">[p <span class="string">performSelector:</span><span class="annotation">@selector</span>(<span class="string">test2:</span>) <span class="string">withObject:</span>@<span class="string">"123"</span>];</span><br></pre></td></tr></table></figure>
-<p><span style="color:#ff5c16">注意:</span><code>test2:</code>方法名后面的<code>:</code>冒号不能少，冒号也是方法名的一部分，表示后面需要传参。</p>
-<p>我们常常说的发消息就是发送SEL类型的消息。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *funcName = <span class="string">@"test3"</span>;</span><br><span class="line">SEL s = <span class="built_in">NSSelectorFromString</span>(funcName); <span class="comment">// 把字符串包装成SEL数据</span></span><br><span class="line">[p performSelector:s];</span><br></pre></td></tr></table></figure>
-<p>每个方法内部都有个<code>_cmd</code>的SEL数据，代表着当前方法。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str = <span class="built_in">NSStringFromSelector</span>(_cmd); <span class="comment">// 把SEL转成字符串</span></span><br></pre></td></tr></table></figure>
-<p><code>_cmd</code>就等于<code>@selector(当前方法名)</code>。</p>
-<h2 id="NSLog">NSLog</h2><p>使用NSLog打印OC对象，使用<code>%@</code>占位符。<br>使用<code>NSLog和%@</code>打印对象时，会调用对象的<code>- description</code>方法。<br>然后拿到<code>- description</code>返回值(NSString *)显示。<br><code>- description</code>默认返回值是地址(句柄)，<code>- description</code>就等同于<code>Java</code>中的<code>toString</code>方法。<br>在<code>- description</code>中写<code>NSLog(@&quot;%@&quot;, self);</code>会进入死循环。</p>
-<p>NSLog输出C语言字符串(%s)时，不能有中文，否则不打印输出结果，printf则不会有这样的问题。</p>
-<p>NSLog输出增强</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%d"</span>, __LINE__); <span class="comment">// 打印行号</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __FILE__); <span class="comment">// 打印文件路径</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__); <span class="comment">// 打印当前方法名</span></span><br></pre></td></tr></table></figure></span>
+<h2 id="生命周期的流程图片">生命周期的流程图片</h2><p>当应用从开始加载到进入后台:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_background.png" alt="" title="应用从开始加载到进入后台的生命周期流程图"></p>
+<p>当用户切换应用时:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/app_enter_foreground.png" alt="" title="用户切换应用时的生命周期流程图"></p>
+<p>ViewController的生命周期:<br><img src="http://7xnejb.com1.z0.glb.clouddn.com/images/UIViewController_Life_Circle.jpg" alt="" title="ViewController的生命周期图"></p>
+<p>以上是生命周期的图片，非常清晰且详细的描述了应用以及ViewController的生命周期</p>
+<p>把流程图看懂<code>iOS应用开发的生命周期</code>自然了然于胸。</p>
+</span>
       
     </div>
 
@@ -254,7 +262,9 @@
           
             <a href="/tags/OC/" rel="tag">#OC</a>
           
-            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/生命周期/" rel="tag">#生命周期</a>
           
         </div>
       
@@ -263,13 +273,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/09/objective-c-grammar04/" rel="prev">Objective-C 语法(四) OC内存</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/23/objective-c-grammar02/" rel="next">Objective-C 语法(二) 类</a>
+              <a href="/2015/08/11/foundation-base/" rel="next">Foundation基础</a>
             
           </div>
         </div>
@@ -295,8 +303,8 @@
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2015/08/08/objective-c-grammar03/"
-                       data-title="Objective-C 语法(三) Category和SEL" data-url="http://goirry.github.io/2015/08/08/objective-c-grammar03/">
+                  <div class="ds-thread" data-thread-key="2015/09/15/AppViewCircleLife/"
+                       data-title="应用及视图的生命周期" data-url="http://goirry.github.io/2015/09/15/AppViewCircleLife/">
                   </div>
                 
               </div>
@@ -414,7 +422,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类_Category"><span class="nav-number">1.</span> <span class="nav-text">分类 Category</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#声明:"><span class="nav-number">1.1.</span> <span class="nav-text">声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现:"><span class="nav-number">1.2.</span> <span class="nav-text">实现:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类的作用："><span class="nav-number">1.3.</span> <span class="nav-text">分类的作用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类注意点:"><span class="nav-number">1.4.</span> <span class="nav-text">分类注意点:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEL"><span class="nav-number">2.</span> <span class="nav-text">SEL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSLog"><span class="nav-number">3.</span> <span class="nav-text">NSLog</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用生命周期的代理方法"><span class="nav-number">1.</span> <span class="nav-text">应用生命周期的代理方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期方法的调用顺序"><span class="nav-number">2.</span> <span class="nav-text">生命周期方法的调用顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期的流程图片"><span class="nav-number">3.</span> <span class="nav-text">生命周期的流程图片</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
