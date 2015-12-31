@@ -63,7 +63,7 @@ OC中创建一个类需要有两个步骤：类的声明、类的实现
 
 类的声明和类的实现都必须以@end结束
 123456789101112131">
-<meta property="og:updated_time" content="2015-08-10T10:48:18.000Z">
+<meta property="og:updated_time" content="2015-12-15T09:42:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Objective-C 语法(二) 类">
 <meta name="twitter:description" content="类是面向对象语言中相当重要的一个知识点，也是最常用的知识点。
@@ -308,7 +308,8 @@ OC中创建一个类需要有两个步骤：类的声明、类的实现
 <p>在类的实现中定义成员变量一定是私有的，因为实现是写在<code>.m</code>文件中得，其他文件不能加载包含<code>.m</code>文件。加上<code>@public</code>也没用，因为访问不到。</p>
 <h2 id="@property和@synthesize">@property和@synthesize</h2><p><code>@property</code> 可以自动生成某个成员变量的<code>setter</code>和<code>getter</code>声明。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@property</span> <span class="keyword">int</span> age;</span><br></pre></td></tr></table></figure></p>
 <p><code>@synthesize</code> 自动生成成员变量的<code>setter</code>和<code>getter</code>实现，并且会访问<code>_age</code>这个成员变量。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">synthesize</span> age = _age</span>;</span><br></pre></td></tr></table></figure></p>
-<p><code>@synthesize age</code>去实现<code>@property int age</code><br><code>= _age</code>去访问成员变量<code>_age</code>来填充<code>setter</code>和<code>getter</code></p>
+<p><code>@synthesize age</code>去实现<code>@property int age</code></p>
+<p><code>= _age</code>去访问成员变量<code>_age</code>来填充<code>setter</code>和<code>getter</code></p>
 <p>如果成员变量不存在(没有在<code>.h</code>文件中创建)，就会在<code>@implemention</code>中自动生成<code>@private</code>的成员变量。</p>
 <p>最简写法: 只在<code>@interface</code>中写<code>@property int age;</code>就会自动生成成员变量及其<code>setter</code>和<code>getter</code>,不用再写@synthesize了。</p>
 <p><span style="color:#e73751">Tips:</span> 自动生成的成员变量是<code>@protected</code>，并且如果自己写了<code>setter</code>或<code>getter</code>则所有自动生成的全都不生成。</p>
@@ -412,14 +413,14 @@ OC中创建一个类需要有两个步骤：类的声明、类的实现
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

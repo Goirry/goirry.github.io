@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[应用及视图的生命周期]]></title>
-    <link href="http://goirry.github.io/2015/09/15/AppViewCircleLife/"/>
-    <id>http://goirry.github.io/2015/09/15/AppViewCircleLife/</id>
+    <link href="http://goirry.github.io/2015/09/15/app-view-circle-life/"/>
+    <id>http://goirry.github.io/2015/09/15/app-view-circle-life/</id>
     <published>2015-09-15T10:12:36.000Z</published>
     <updated>2015-10-31T09:18:26.000Z</updated>
     <content type="html"><![CDATA[<p>应用和视图的生命周期，应该算是iOS开发最基本的平台机制了吧。</p>
@@ -289,7 +289,7 @@
     <link href="http://goirry.github.io/2015/08/09/objective-c-grammar04/"/>
     <id>http://goirry.github.io/2015/08/09/objective-c-grammar04/</id>
     <published>2015-08-09T10:15:36.000Z</published>
-    <updated>2015-09-16T11:07:32.000Z</updated>
+    <updated>2015-12-16T09:38:39.000Z</updated>
     <content type="html"><![CDATA[<h2 id="OC内存">OC内存</h2><p>每个OC对象都有自己的引用计数器，是整数，表示该对象被引用的次数。<br>当引用计数器为<code>0</code>的时候，对象就会被系统回收。</p>
 <p>每个OC对象内部专门有<code>4个字节</code>的存储空间来存引用计数器。</p>
 <p>给对象发送一条<code>retain</code>消息，引用计数器<code>+1</code>，<code>retain</code>方法返回对象本身。<br>给对象发送一条<code>release</code>消息， 引用计数器<code>-1</code>。<br>给对象发送<code>retainCount</code>消息获得引用计数器值。</p>
@@ -327,13 +327,6 @@
 </li>
 </ul>
 <a id="more"></a>
-<p>iOS类中的属性声明规律:</p>
-<ul>
-<li><code>UI</code>控件用<code>weak</code></li>
-<li><code>OC</code>对象用<code>strong</code></li>
-<li>基本数据类型用<code>assign</code></li>
-<li><code>NSString</code>用<code>copy</code></li>
-</ul>
 <p>代码规范: 返回BOOL类型的方法名，一般以<code>is</code>开头，所以返回BOOL值的getter可以写成<code>getter=isFunc</code>。</p>
 <p><span style="color:#e73751">Tips:</span> 当两个类循环嵌套引用时，出现内存泄露的解决方案: 一端用<code>retain</code>，一段用<code>assign</code>。</p>
 <h3 id="Autorelease">Autorelease</h3><p>autorelease会返回对象本身，返回id类型。<br>autorelease会将对象放到一个自动释放池中。调用时，不改变引用计数器的值。<br>当自动释放池(也是对象)被销毁时，会对池子里面的所有对象做一次release操作。</p>
@@ -383,6 +376,14 @@
 </ul>
 </li>
 </ol>
+<p>iOS类中的属性声明规律:</p>
+<ul>
+<li><code>UI</code>控件用<code>weak</code></li>
+<li><code>OC</code>对象用<code>strong</code></li>
+<li>基本数据类型用<code>assign</code></li>
+<li><code>NSString</code>用<code>copy</code></li>
+<li><code>Delegate</code>用<code>weak</code></li>
+</ul>
 <p><span style="color:#e73751">Tips:</span> 循环嵌套引用时，一端用<code>strong</code>，一端用<code>weak</code>。</p>
 <h2 id="@class">@class</h2><p>@class仅仅是告诉编译器，当前声明的是一个类。<br>嵌套引用的时候用到<code>@class 类名;</code>，写在<code>.h</code>文件当中，不用<code>#import</code>。</p>
 <p>开发中引用一个类的规范:</p>
@@ -501,7 +502,7 @@
     <link href="http://goirry.github.io/2015/04/23/objective-c-grammar02/"/>
     <id>http://goirry.github.io/2015/04/23/objective-c-grammar02/</id>
     <published>2015-04-23T09:28:41.000Z</published>
-    <updated>2015-08-10T10:48:18.000Z</updated>
+    <updated>2015-12-15T09:42:14.000Z</updated>
     <content type="html"><![CDATA[<p>类是面向对象语言中相当重要的一个知识点，也是最常用的知识点。</p>
 <h2 id="类的概念">类的概念</h2><blockquote>
 <p>OC当中的类其实原理就是C中的结构体</p>
@@ -575,7 +576,8 @@
 <p>在类的实现中定义成员变量一定是私有的，因为实现是写在<code>.m</code>文件中得，其他文件不能加载包含<code>.m</code>文件。加上<code>@public</code>也没用，因为访问不到。</p>
 <h2 id="@property和@synthesize">@property和@synthesize</h2><p><code>@property</code> 可以自动生成某个成员变量的<code>setter</code>和<code>getter</code>声明。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@property</span> <span class="keyword">int</span> age;</span><br></pre></td></tr></table></figure></p>
 <p><code>@synthesize</code> 自动生成成员变量的<code>setter</code>和<code>getter</code>实现，并且会访问<code>_age</code>这个成员变量。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">synthesize</span> age = _age</span>;</span><br></pre></td></tr></table></figure></p>
-<p><code>@synthesize age</code>去实现<code>@property int age</code><br><code>= _age</code>去访问成员变量<code>_age</code>来填充<code>setter</code>和<code>getter</code></p>
+<p><code>@synthesize age</code>去实现<code>@property int age</code></p>
+<p><code>= _age</code>去访问成员变量<code>_age</code>来填充<code>setter</code>和<code>getter</code></p>
 <p>如果成员变量不存在(没有在<code>.h</code>文件中创建)，就会在<code>@implemention</code>中自动生成<code>@private</code>的成员变量。</p>
 <p>最简写法: 只在<code>@interface</code>中写<code>@property int age;</code>就会自动生成成员变量及其<code>setter</code>和<code>getter</code>,不用再写@synthesize了。</p>
 <p><span style="color:#e73751">Tips:</span> 自动生成的成员变量是<code>@protected</code>，并且如果自己写了<code>setter</code>或<code>getter</code>则所有自动生成的全都不生成。</p>
